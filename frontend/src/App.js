@@ -1,11 +1,98 @@
-import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom'
-import './App.css';
+import React, { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Navbar";
+import TodosList from "./component/todo-list";
+import AddTodo from "./component/add-todo";
+import Login from "./component/login";
+import Signup from "./component/signup";
+import "./App.css";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [error, setError] = useState("");
+
+  const login = async (user = null) => {
+    // default user to null
+    setUser(user);
+  };
+  
+  const logout = async () => {
+    setUser(null);
+  };
+  
+  const signup = async (user = null) => {
+    // default user to null
+    setUser(user);
+  };
+
   return (
     <div className="App">
-      
+      <Navbar bg="primary" variant="dark">
+        <div className="container-fluid">
+          <Navbar.Brand>TodosApp</Navbar.Brand>
+          <Nav className="me-auto">
+            <Container>
+              <Link class="nav-link" to={"/todos"}>
+                Todos
+              </Link>
+              {user ? (
+                <Link class="nav-link">Logout ({user})</Link>
+              ) : (
+                <>
+                  <Link class="nav-link" to={"/login"}>
+                    Login
+                  </Link>
+                  <Link class="nav-link" to={"/signup"}>
+                    Sign Up
+                  </Link>
+                </>
+              )}
+            </Container>
+          </Nav>
+        </div>
+      </Navbar>
+
+      <div className="container mt-4">
+      <Routes>
+        <Route
+          path="/"
+          element={<TodosList token={token} />}
+        />
+        <Route
+          path="/todos"
+          element={<TodosList token={token} />}
+        />
+        <Route
+          path="/todos/create"
+          element={<AddTodo token={token} />}
+        />
+        <Route
+          path="/todos/:id"
+          element={<AddTodo token={token} />}
+        />
+        <Route
+          path="/login"
+          element={<Login login={login} />}
+        />
+        <Route
+          path="/signup"
+          element={<Signup signup={signup} />}
+        />
+      </Routes>
+        <footer
+          className="text-center text-lg-start
+        bg-light text-muted mt-4"
+        >
+          <div className="text-center p-4">
+            © Copyright
+            <a target="_blank" className="text-reset fw-bold text-decoration-none" href="https://github.com/Mansur-09595" rel="noreferrer"> Mansur Musaev</a>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
