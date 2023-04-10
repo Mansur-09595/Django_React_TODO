@@ -11,16 +11,16 @@ from django.views.decorators.csrf import csrf_exempt
 #Login_moduls
 from django.contrib.auth import authenticate
 
-class TodoList(generics.ListAPIView):
-    serializer_class = TodoSerializer
+# class TodoList(generics.ListAPIView):
+#     serializer_class = TodoSerializer
 
-    def get_queryset(self):
-        user = self.request.user
-        return Todo.objects.filter(user=user).order_by('-created')
+#     def get_queryset(self):
+#         user = self.request.user
+#         return Todo.objects.filter(user=user).order_by('-created')
     
 class TodoListCreate(generics.ListCreateAPIView):
     serializer_class = TodoSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
@@ -57,6 +57,7 @@ def signup(request):
             data = JSONParser().parse(request)
             user = User.objects.create_user(username=data['username'], password=data['password'])
             user.save()
+            
             token = Token.objects.create(user=user)
             
             return JsonResponse({'token':str(token)},status=201)
