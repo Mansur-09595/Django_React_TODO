@@ -91,12 +91,13 @@ function App() {
               path={["/", "/todos"]}
               render={(props) => <TodosList {...props} token={token} />}
             ></Route>
-            <Route
+            {/* <Route
               path="/todos/create"
               render={(props) => <AddTodo {...props} token={token} />}
-            ></Route>
+            ></Route> */}
             <Route
-              path="/todos/:id/"
+              exact
+              path={["/todos/:id/", "/todos/create"]}
               render={(props) => <AddTodo {...props} token={token} />}
             ></Route>
             <Route

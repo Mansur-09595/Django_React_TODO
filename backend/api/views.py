@@ -20,7 +20,7 @@ from django.contrib.auth import authenticate
     
 class TodoListCreate(generics.ListCreateAPIView):
     serializer_class = TodoSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
